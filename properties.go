@@ -42,7 +42,8 @@ type PropertyDefinition struct {
 // UnmarshalYAML converts YAML text to a type
 func (p *PropertyDefinition) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	var s string
-	if err := unmarshal(&s); err == nil {
+	err := unmarshal(&s)
+	if err == nil {
 		v := newPAValue(s)
 		p.Value = *v
 		return nil
@@ -57,7 +58,8 @@ func (p *PropertyDefinition) UnmarshalYAML(unmarshal func(interface{}) error) er
 		Constraints Constraints            `yaml:"constraints,omitempty,flow" json:"constraints,omitempty"`
 		EntrySchema map[string]interface{} `yaml:"entry_schema,omitempty" json:"entry_schema,omitempty"`
 	}
-	err := unmarshal(&test2)
+	err = unmarshal(&test2)
+	//fmt.Println(test2.Required)
 	if err == nil {
 		p.Value = test2.Value
 		p.Type = test2.Type
@@ -67,6 +69,52 @@ func (p *PropertyDefinition) UnmarshalYAML(unmarshal func(interface{}) error) er
 		p.Status = test2.Status
 		p.Constraints = test2.Constraints
 		p.EntrySchema = test2.EntrySchema
+		return nil
+	}
+	var test3 struct {
+		Value       PropertyAssignment     `yaml:"value,omitempty"`
+		Type        string                 `yaml:"type" json:"type"`                                   // The required data type for the property
+		Description string                 `yaml:"description,omitempty" json:"description,omitempty"` // The optional description for the property.
+		Required    bool                   `yaml:"required,omitempty" json:"required,omitempty"`       // An optional key that declares a property as required ( true) or not ( false) Default: true
+		Default     map[string]string      `yaml:"default,omitempty" json:"default,omitempty"`
+		Status      Status                 `yaml:"status,omitempty" json:"status,omitempty"`
+		Constraints Constraints            `yaml:"constraints,omitempty,flow" json:"constraints,omitempty"`
+		EntrySchema map[string]interface{} `yaml:"entry_schema,omitempty" json:"entry_schema,omitempty"`
+	}
+	err = unmarshal(&test3)
+	//fmt.Println(test2.Required)
+	if err == nil {
+		p.Value = test3.Value
+		p.Type = test3.Type
+		p.Description = test3.Description
+		p.Required = test3.Required
+		p.Default = ""
+		p.Status = test3.Status
+		p.Constraints = test3.Constraints
+		p.EntrySchema = test3.EntrySchema
+		return nil
+	}
+	var test4 struct {
+		Value       PropertyAssignment     `yaml:"value,omitempty"`
+		Type        string                 `yaml:"type" json:"type"`                                   // The required data type for the property
+		Description string                 `yaml:"description,omitempty" json:"description,omitempty"` // The optional description for the property.
+		Required    bool                   `yaml:"required,omitempty" json:"required,omitempty"`       // An optional key that declares a property as required ( true) or not ( false) Default: true
+		Default     []string               `yaml:"default,omitempty" json:"default,omitempty"`
+		Status      Status                 `yaml:"status,omitempty" json:"status,omitempty"`
+		Constraints Constraints            `yaml:"constraints,omitempty,flow" json:"constraints,omitempty"`
+		EntrySchema map[string]interface{} `yaml:"entry_schema,omitempty" json:"entry_schema,omitempty"`
+	}
+	err = unmarshal(&test4)
+	//fmt.Println(test2.Required)
+	if err == nil {
+		p.Value = test4.Value
+		p.Type = test4.Type
+		p.Description = test4.Description
+		p.Required = test4.Required
+		p.Default = ""
+		p.Status = test4.Status
+		p.Constraints = test4.Constraints
+		p.EntrySchema = test4.EntrySchema
 		return nil
 	}
 	var res interface{}

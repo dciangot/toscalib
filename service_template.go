@@ -16,7 +16,11 @@ limitations under the License.
 
 package toscalib
 
-import "github.com/kenjones-cisco/mergo"
+import (
+	"fmt"
+
+	"github.com/kenjones-cisco/mergo"
+)
 
 // ServiceTemplateDefinition is the meta structure containing an entire tosca document as described in
 // http://docs.oasis-open.org/tosca/TOSCA-Simple-Profile-YAML/v1.0/csd03/TOSCA-Simple-Profile-YAML-v1.0-csd03.html
@@ -149,6 +153,7 @@ func (s *ServiceTemplateDefinition) GetInputValue(prop string, raw bool) interfa
 // SetInputValue sets an input value on a Service Template Definition
 func (s *ServiceTemplateDefinition) SetInputValue(prop string, value interface{}) {
 	v := newPAValue(value)
+	fmt.Printf("Prop: %v", prop)
 	s.TopologyTemplate.Inputs[prop] = PropertyDefinition{Value: *v}
 }
 

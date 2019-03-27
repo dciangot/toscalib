@@ -97,7 +97,7 @@ func parseImports(baseDir string, impDefs []ImportDefinition, resolver Resolver,
 		}
 
 		var tt ServiceTemplateDefinition
-		err = yaml.Unmarshal(r, &tt)
+		err = yaml.UnmarshalStrict(r, &tt)
 		if err != nil {
 			return std, err
 		}
@@ -124,9 +124,14 @@ func parseImports(baseDir string, impDefs []ImportDefinition, resolver Resolver,
 func (t *ServiceTemplateDefinition) parse(baseDir string, data []byte, resolver Resolver, hooks ParserHooks) error {
 	var std ServiceTemplateDefinition
 	// Unmarshal the data in an interface
-	err := yaml.Unmarshal(data, &std)
+	err := yaml.UnmarshalStrict(data, &std)
 	if err != nil {
 		return err
+	}
+
+	for nodeT := range std.TopologyTemplate.NodeTemplates {
+		fmt.Printf("%v \t\t", std.TopologyTemplate.NodeTemplates[nodeT].Type)
+		fmt.Println(nodeT)
 	}
 
 	err = hooks.ParsedSTD("", &std)
