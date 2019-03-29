@@ -129,10 +129,10 @@ func (t *ServiceTemplateDefinition) parse(baseDir string, data []byte, resolver 
 		return err
 	}
 
-	for nodeT := range std.TopologyTemplate.NodeTemplates {
-		fmt.Printf("%v \t\t", std.TopologyTemplate.NodeTemplates[nodeT].Type)
-		fmt.Println(nodeT)
-	}
+	//for nodeT := range std.TopologyTemplate.NodeTemplates {
+	//	fmt.Printf("%v \t\t", std.TopologyTemplate.NodeTemplates[nodeT].Type)
+	//	fmt.Println(nodeT)
+	//}
 
 	err = hooks.ParsedSTD("", &std)
 	if err != nil {
