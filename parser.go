@@ -167,6 +167,11 @@ func (t *ServiceTemplateDefinition) parse(baseDir string, data []byte, resolver 
 	}
 	std = std.Merge(tt)
 
+	//for nodeT, value := range std.NodeTypes {
+	//	fmt.Printf("%s %s \n", nodeT, value)
+	//	fmt.Println(nodeT)
+	//}
+
 	// update the initial context with the freshly loaded context
 	*t = std
 
